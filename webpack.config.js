@@ -1,112 +1,121 @@
 'use strict';
 
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const proxy = require('./server/webpack-dev-proxy');
-const loaders = require('./webpack/loaders');
+var path = require('path'),
+    webpack = require('webpack'),
+    pkg = require('./package.json'),
+    HtmlWebpackPlugin = require('html-webpack-plugin');
+
+var paths = {
+    dist: path.join(__dirname, 'dist'),
+    src: path.join(__dirname, 'src')
+}
 
 const baseAppEntries = [
-  './src/index.jsx',
+    './src/index.jsx'
 ];
 
 const devAppEntries = [
-  'webpack-hot-middleware/client?reload=true',
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server'
 ];
 
 const appEntries = baseAppEntries
-  .concat(process.env.NODE_ENV === 'development' ? devAppEntries : []);
+    .concat(process.env.NODE_ENV === 'development' ? devAppEntries : []);
+
+console.log('appEntries', appEntries)
 
 const basePlugins = [
-  new webpack.DefinePlugin({
-    __DEV__: process.env.NODE_ENV !== 'production',
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-  }),
-  new webpack.optimize.CommonsChunkPlugin('vendor', '[name].[hash].js'),
-  new HtmlWebpackPlugin({
-    template: './src/index.html',
-    inject: 'body'
-  })
+    new webpack.DefinePlugin({
+        __DEV__: process.env.NODE_ENV !== 'production',
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
+    new webpack.optimize.CommonsChunkPlugin('vendor', '[name].[hash].js'),
+    new HtmlWebpackPlugin({
+        template: './src/index.html',
+        inject: 'body'
+    })
 ];
 
 const devPlugins = [
-  new webpack.NoErrorsPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
 ];
 
 const prodPlugins = [
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false
-    }
-  })
+    new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false
+        }
+    })
 ];
 
 const plugins = basePlugins
-  .concat(process.env.NODE_ENV === 'production' ? prodPlugins : [])
-  .concat(process.env.NODE_ENV === 'development' ? devPlugins : []);
+    .concat(process.env.NODE_ENV === 'production' ? prodPlugins : [])
+    .concat(process.env.NODE_ENV === 'development' ? devPlugins : []);
 
 module.exports = {
 
-  entry: {
-    app: appEntries,
-    vendor: [
-      'es5-shim',
-      'es6-shim',
-      'es6-promise',
-      'react',
-      'react-dom',
-      'react-redux',
-      'redux',
-      'redux-thunk',
-      'redux-logger',
-      'react-router',
-      'react-router-redux',
-    ]
-  },
+    entry: {
+        app: appEntries,
+        vendor: [
+            'es5-shim',
+            'es6-shim',
+            'es6-promise',
+            'react',
+            'react-dom',
+            'react-redux',
+            'redux',
+            'redux-thunk',
+            'redux-logger',
+            'react-router',
+            'react-router-redux',
+        ]
+    },
+    output: {
+        path: paths.dist,
+        filename: '[name].[hash].js',
+        publicPath: '/',
+        sourceMapFilename: '[name].[hash].js.map',
+        chunkFilename: '[id].chunk.js'
+    },
+    devtool: 'eval-source-map',
+    resolve: {
+        extensions: ['', '.jsx', '.js']
+    },
 
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].[hash].js',
-    publicPath: '/',
-    sourceMapFilename: '[name].[hash].js.map',
-    chunkFilename: '[id].chunk.js'
-  },
-  devtool: 'eval-source-map',
-  resolve: {
-    extensions: ['', '.jsx', '.js']
-  },
+    plugins: plugins,
 
-  plugins: plugins,
+    //   devServer: {
+    //     historyApiFallback: { index: '/' },
+    //     proxy: proxy(),
+    //   },
 
-//   devServer: {
-//     historyApiFallback: { index: '/' },
-//     proxy: proxy(),
-//   },
+    module: {
+        preLoaders: [
+            //   loaders.tslint,
+        ],
+        loaders: [{
+            test: /\.jsx?$/,
+            loader: 'react-hot!babel?presets=es2015', // 'babel-loader' is also a legal name to reference
+            include: paths.src,
+            exclude: /(\.test\.js$)/
+        },
+{
+    test: /\.html$/,
+    loader: 'raw',
+    exclude: /node_modules/
+}
+        ]
+    },
 
-  module: {
-    preLoaders: [
-    //   loaders.tslint,
-    ],
-    loaders: [
-      loaders.jsx,
-      loaders.html,
-      loaders.css,
-    //   loaders.svg,
-    //   loaders.eot,
-    //   loaders.woff,
-    //   loaders.woff2,
-    //   loaders.ttf,
-    ]
-  },
-
-  postcss: function() {
-    return [
-      require('postcss-import')({
-        addDependencyTo: webpack
-      }),
-      require('postcss-cssnext')({
-        browsers: ['ie >= 8', 'last 2 versions']
-      })
-    ];
-  }
+    postcss: function() {
+        return [
+            require('postcss-import')({
+                addDependencyTo: webpack
+            }),
+            require('postcss-cssnext')({
+                browsers: ['ie >= 8', 'last 2 versions']
+            })
+        ];
+    }
 };
