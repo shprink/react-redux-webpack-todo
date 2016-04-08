@@ -71,9 +71,7 @@ module.exports = {
     sourceMapFilename: '[name].[hash].js.map',
     chunkFilename: '[id].chunk.js'
   },
-
-  devtool: 'source-map',
-
+  devtool: 'eval-source-map',
   resolve: {
     extensions: ['', '.jsx', '.js']
   },
