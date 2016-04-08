@@ -5,7 +5,10 @@ import AppReducers from './reducers';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-let store = createStore(AppReducers);
+let store = createStore(
+    AppReducers,
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+);
 
 console.log('store', store.getState());
 

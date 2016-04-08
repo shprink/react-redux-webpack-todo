@@ -7,9 +7,9 @@ export default class extends Component {
   render() {
     return (
         <div>
-         <AddTodo />
-        <VisibleTodoList />
-        <FilterList />
+            <AddTodo />
+            <VisibleTodoList />
+            <FilterList />
         </div>
         )
   }
