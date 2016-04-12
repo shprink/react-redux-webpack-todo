@@ -9,7 +9,7 @@ constructor (props) {
         return <span>{this.props.children}</span>
     }
     return (
-        <a href="#"
+        <a href=""
             onClick={e => {
                 e.preventDefault()
                 this.props.onClick()

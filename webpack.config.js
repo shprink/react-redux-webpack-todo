@@ -15,7 +15,7 @@ const baseAppEntries = [
 ];
 
 const devAppEntries = [
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client',
     'webpack/hot/only-dev-server'
 ];
 
@@ -65,10 +65,7 @@ module.exports = {
             'react-dom',
             'react-redux',
             'redux',
-            'redux-thunk',
-            'redux-logger',
-            'react-router',
-            'react-router-redux',
+            'redux-thunk'
         ]
     },
     output: {
@@ -95,16 +92,19 @@ module.exports = {
             //   loaders.tslint,
         ],
         loaders: [{
-            test: /\.jsx?$/,
-            loader: 'react-hot!babel?presets=es2015', // 'babel-loader' is also a legal name to reference
+            test: /\.(jsx|js)?$/,
+            loader: 'react-hot!babel?presets=es2015',
             include: paths.src,
             exclude: /(\.test\.js$)/
-        },
-{
-    test: /\.html$/,
-    loader: 'raw',
-    exclude: /node_modules/
-}
+        }, {
+                test: /\.css$/,
+                loaders: ['style', 'css', 'postcss'],
+                include: paths.src,
+            }, {
+                test: /\.html$/,
+                loader: 'raw',
+                exclude: /node_modules/
+            }
         ]
     },
 
