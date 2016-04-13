@@ -5,7 +5,7 @@ import {
     toggleTodo
 } from './actions';
 
-describe('[REDUX] Actions Todo', function() {
+describe('[REDUX][Actions] Todo', function() {
     describe('ADD_TODO', function() {
         it('Should export a constant ADD_TODO', function() {
             expect(ADD_TODO).toEqual('ADD_TODO')

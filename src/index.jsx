@@ -9,9 +9,6 @@ let store = createStore(
     AppReducers,
     window.devToolsExtension ? window.devToolsExtension() : f => f
 );
-
-console.log('store', store.getState());
-
 ReactDOM.render(
     <Provider store={store}>
         <App />

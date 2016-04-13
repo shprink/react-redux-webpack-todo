@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../todo/actions';
 
-console.log('addTodo', addTodo)
-
 let AddTodo = ({ dispatch }) => {
   let input
 

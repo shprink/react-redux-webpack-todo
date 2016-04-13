@@ -11,7 +11,7 @@ export const addTodo = (text = '') => {
 }
 
 export const toggleTodo = (id) => {
-    if (!id) {
+    if (typeof id === 'undefined') {
         throw new Error('To toggle an item you MUST provide an ID');
     }
     return {

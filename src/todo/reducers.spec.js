@@ -6,7 +6,7 @@ import {
     toggleTodo
 } from './actions';
 
-describe('[REDUX] Reducer Todo', function() {
+describe('[REDUX][Reducer] Todo', function() {
     it('Should be a function.', function() {
         expect(typeof todo).toEqual('function')
     });
