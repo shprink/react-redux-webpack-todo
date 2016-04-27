@@ -1,9 +1,10 @@
 'use strict';
 
-var path = require('path'),
-    webpack = require('webpack'),
-    pkg = require('./package.json'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const pkg = require('./package.json')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WebpackNotifierPlugin = require('webpack-notifier')
 
 var paths = {
     dist: path.join(__dirname, 'dist'),
@@ -22,8 +23,6 @@ const devAppEntries = [
 const appEntries = baseAppEntries
     .concat(process.env.NODE_ENV === 'development' ? devAppEntries : []);
 
-console.log('appEntries', appEntries)
-
 const basePlugins = [
     new webpack.DefinePlugin({
         __DEV__: process.env.NODE_ENV !== 'production',
@@ -39,6 +38,7 @@ const basePlugins = [
 const devPlugins = [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new WebpackNotifierPlugin({ title: pkg.name })
 ];
 
 const prodPlugins = [
@@ -89,7 +89,11 @@ module.exports = {
 
     module: {
         preLoaders: [
-            //   loaders.tslint,
+            {
+                test: /\.js$/,
+                loader: "eslint",
+                exclude: /node_modules/
+            }
         ],
         loaders: [{
             test: /\.(jsx|js)?$/,
@@ -98,7 +102,7 @@ module.exports = {
             exclude: /(\.test\.js$)/
         }, {
                 test: /\.css$/,
-                loaders: ['style', 'css', 'postcss'],
+                loaders: ['style', 'css?modules&localIndentName=[local]---[hash:base64:8]', 'cssnext'],
                 include: paths.src,
             }, {
                 test: /\.html$/,
@@ -106,16 +110,5 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
-    },
-
-    postcss: function() {
-        return [
-            require('postcss-import')({
-                addDependencyTo: webpack
-            }),
-            require('postcss-cssnext')({
-                browsers: ['ie >= 8', 'last 2 versions']
-            })
-        ];
     }
 };

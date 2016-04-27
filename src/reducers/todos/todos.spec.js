@@ -1,7 +1,11 @@
 import {todos, visibilityFilter} from './reducers';
-import {setVisibilityFilter, SET_VISIBILITY_FILTER} from './actions';
-import {ADD_TODO, TOGGLE_TODO} from '../todo/actions';
-import {FILTER_SHOW_ALL, FILTER_SHOW_COMPLETED, FILTER_SHOW_ACTIVE} from '../filterList';
+import {ADD_TODO,TOGGLE_TODO} from '../../actions/todos/todo'
+import {
+    SET_VISIBILITY_FILTER,
+    FILTER_SHOW_ALL,
+    FILTER_SHOW_COMPLETED,
+    FILTER_SHOW_ACTIVE
+} from '../../actions/visibilityFilter/visibilityFilter'
 
 describe('[REDUX][Reducer] Todos', function() {
     let initialState = [{

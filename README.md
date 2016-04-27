@@ -1,4 +1,9 @@
-# react-redux-webpack-todo
+## Install
+
+```
+npm install
+npm i eslint-plugin-react -g
+```
 
 ## Features
 
@@ -7,6 +12,9 @@
 * ES5, ES6 shim
 * Unit tests (Karma, Jasmine, ES6)
 * Debug tools (install [Redux DevTools for Chrome](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd))
+* ESlint
+* CSS module
+* Webpack Notifications
 
 ## Commands
 

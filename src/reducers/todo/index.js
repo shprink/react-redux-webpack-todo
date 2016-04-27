@@ -1,6 +1,6 @@
-import {ADD_TODO, TOGGLE_TODO} from './actions';
+import {ADD_TODO, TOGGLE_TODO} from '../../actions/todo'
 
-export const todo = (state = {}, action) => {
+export default (state = {}, action) => {
     switch (action.type) {
         case ADD_TODO:
             return {
@@ -10,7 +10,7 @@ export const todo = (state = {}, action) => {
             }
         case TOGGLE_TODO:
             if (typeof action.id === 'undefined') {
-                throw new Error('To toggle an item you MUST provide an ID');
+                throw new Error('To toggle an item you MUST provide an ID')
             }
             if (state.id !== action.id) {
                 return state
