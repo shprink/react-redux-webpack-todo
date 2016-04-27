@@ -7,7 +7,7 @@ npm i eslint-plugin-react -g
 
 ## Features
 
-* hot reloading
+* hot reloading (Js and CSS!)
 * JSX support
 * ES5, ES6 shim
 * Unit tests (Karma, Jasmine, ES6)

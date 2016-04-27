@@ -36,7 +36,6 @@ const basePlugins = [
 ];
 
 const devPlugins = [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new WebpackNotifierPlugin({ title: pkg.name })
 ];
@@ -77,7 +76,7 @@ module.exports = {
     },
     devtool: 'eval-source-map',
     resolve: {
-        extensions: ['', '.jsx', '.js']
+        extensions: ['', '.jsx', '.js', '.css']
     },
 
     plugins: plugins,
@@ -97,18 +96,29 @@ module.exports = {
         ],
         loaders: [{
             test: /\.(jsx|js)?$/,
-            loader: 'react-hot!babel?presets=es2015',
+            loader: 'react-hot!babel',
             include: paths.src,
             exclude: /(\.test\.js$)/
         }, {
                 test: /\.css$/,
-                loaders: ['style', 'css?modules&localIndentName=[local]---[hash:base64:8]', 'cssnext'],
-                include: paths.src,
+                loaders: ['style', 'css?modules&localIdentName=[local]---[hash:base64:5]', 'postcss'],
+                include: paths.src
             }, {
                 test: /\.html$/,
                 loader: 'raw',
                 exclude: /node_modules/
             }
+        ]
+    },
+    postcss: function (webpack) {
+        return [
+            require("postcss-import")({ addDependencyTo: webpack }),
+            require("postcss-url")(),
+            require("postcss-custom-properties")(),
+            require("postcss-nesting")(),
+            require("postcss-cssnext")(),
+            require("postcss-browser-reporter")(),
+            require("postcss-reporter")()
         ]
     }
 };

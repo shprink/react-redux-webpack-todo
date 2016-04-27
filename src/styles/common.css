@@ -1,0 +1,12 @@
+@import './config.css';
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background-color: var(--mainBackgroundColor);
+    color: var(--textColor);
+    & a {
+        color: var(--linkColor);
+    }
+}

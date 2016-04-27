@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import FilterList from '../FilterList';
 import AddTodoContainer from '../AddTodoContainer';
 import TodoListContainer from '../TodoListContainer';
+import styleable from 'react-styleable';
+import css from './style'
 
-export default class extends Component {
+@styleable(css)
+class App extends Component {
     render() {
         return (
-            <div>
+            <div className={this.props.css.root}>
                 <AddTodoContainer />
                 <TodoListContainer />
                 <FilterList />
@@ -14,4 +17,4 @@ export default class extends Component {
         )
     }
 }
-
+export default App;

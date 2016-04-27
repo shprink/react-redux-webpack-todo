@@ -1,0 +1,6 @@
+:root{
+    --mainColor: purple;
+    --mainBackgroundColor: #CCC;
+    --textColor: #333;
+    --linkColor: var(--mainColor);
+}
