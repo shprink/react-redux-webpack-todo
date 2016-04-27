@@ -1,10 +1,8 @@
-import {
-    todo
-} from './reducers';
+import todo from './index';
 import {
     addTodo,
     toggleTodo
-} from './actions';
+} from '../../actions/todo';
 
 describe('[REDUX][Reducer] Todo', function() {
     it('Should be a function.', function() {

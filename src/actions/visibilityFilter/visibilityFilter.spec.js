@@ -1,7 +1,7 @@
 import {
     SET_VISIBILITY_FILTER,
     setVisibilityFilter
-} from './todoList';
+} from '.';
 
 describe('[REDUX][Actions] Todo', function() {
     describe('SET_VISIBILITY_FILTER', function() {

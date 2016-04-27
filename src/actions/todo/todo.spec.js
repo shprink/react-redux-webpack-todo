@@ -3,7 +3,7 @@ import {
     TOGGLE_TODO,
     addTodo,
     toggleTodo
-} from './todo';
+} from '.';
 
 describe('[REDUX][Actions] Todo', function() {
     describe('ADD_TODO', function() {
